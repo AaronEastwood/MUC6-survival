@@ -127,7 +127,10 @@ namespace Completed
 		public void GameOver()
 		{
 			//Set levelText to display number of levels passed and game over message
-			levelText.text = "After " + level + " days, you starved.";
+			if (level == 1)
+				levelText.text = "After " + level + " day, you starved.";
+			else
+				levelText.text = "After " + level + " days, you starved.";
 			
 			//Enable black background image gameObject.
 			levelImage.SetActive(true);
