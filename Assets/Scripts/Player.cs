@@ -12,6 +12,13 @@ namespace Completed
 		public int pointsPerSoda = 20;				//Number of points to add to player food points when picking up a soda object.
 		public int wallDamage = 1;					//How much damage a player does to a wall when chopping it.
 		public Text foodText;						//UI Text to display current player food total.
+
+		public AudioClip[] footsteps = null;			//Footstep sound effect
+		public AudioClip[] eat = null;				//Eat sound effect
+		public AudioClip[] drink = null;
+		public AudioClip[] playerHit = null;
+		public AudioClip[] playerChop = null;
+		public AudioClip[] burp = null;
 		
 		private Animator animator;					//Used to store a reference to the Player's animator component.
 		private int food;							//Used to store player food points total during level.
@@ -135,6 +142,8 @@ namespace Completed
 			//If Move returns true, meaning Player was able to move into an empty space.
 			if (Move (xDir, yDir, out hit)) 
 			{
+				//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
+				SoundManager.instance.PlaySound (footsteps[Random.Range(0, footsteps.Length)]);
 			}
 			
 			//Since the player has moved and lost food points, check if the game has ended.
@@ -157,6 +166,9 @@ namespace Completed
 			
 			//Set the attack trigger of the player's animation controller in order to play the player's attack animation.
 			animator.SetTrigger ("playerChop");
+
+			//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
+			SoundManager.instance.PlaySound (playerChop[Random.Range(0, playerChop.Length)]);
 		}
 		
 		
@@ -184,6 +196,9 @@ namespace Completed
 				
 				//Disable the food object the player collided with.
 				other.gameObject.SetActive (false);
+
+				//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
+				SoundManager.instance.PlaySound (eat[Random.Range(0, eat.Length)]);
 			}
 			
 			//Check if the tag of the trigger collided with is Soda.
@@ -198,6 +213,9 @@ namespace Completed
 				
 				//Disable the soda object the player collided with.
 				other.gameObject.SetActive (false);
+
+				//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
+				SoundManager.instance.PlaySound (drink[Random.Range (0, drink.Length)]);
 			}
 		}
 		
@@ -216,6 +234,9 @@ namespace Completed
 		{
 			//Set the trigger for the player animator to transition to the playerHit animation.
 			animator.SetTrigger ("playerHit");
+
+			//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
+			SoundManager.instance.PlaySound (playerHit[Random.Range(0, playerHit.Length)]);
 			
 			//Subtract lost food points from the players total.
 			food -= loss;

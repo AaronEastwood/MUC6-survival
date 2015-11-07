@@ -7,7 +7,8 @@ namespace Completed
 	public class Enemy : MovingObject
 	{
 		public int playerDamage; 							//The amount of food points to subtract from the player when attacking.
-		
+
+		public AudioClip enemyAttack = null;
 		
 		private Animator animator;							//Variable of type Animator to store a reference to the enemy's Animator component.
 		private Transform target;							//Transform to attempt to move toward each turn.
@@ -88,6 +89,9 @@ namespace Completed
 			
 			//Set the attack trigger of animator to trigger Enemy attack animation.
 			animator.SetTrigger ("enemyAttack");
+
+			//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
+			SoundManager.instance.PlaySound (enemyAttack);
 			
 		}
 	}

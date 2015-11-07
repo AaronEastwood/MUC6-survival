@@ -98,6 +98,30 @@ MonoBehaviour:
   pointsPerSoda: 20
   wallDamage: 1
   foodText: {fileID: 0}
+  footsteps:
+  - {fileID: 8300000, guid: 3e00018d82c804b98a2115f118994d3f, type: 3}
+  - {fileID: 8300000, guid: 80980519aa9d3422187bbf7739b536dd, type: 3}
+  - {fileID: 8300000, guid: a5d9120a00f964e4c8f64913d690ebe9, type: 3}
+  - {fileID: 8300000, guid: ff251fe595ff3402b841b445668c0c18, type: 3}
+  - {fileID: 8300000, guid: 9c5b17c1a6eef47b4ae672f042b4b3b8, type: 3}
+  eat:
+  - {fileID: 8300000, guid: 3ecb55a2387a64cd3911e2ad8ee5ff22, type: 3}
+  - {fileID: 8300000, guid: 548f95ee4dbb4402baeed9502e86c054, type: 3}
+  - {fileID: 8300000, guid: 233d7d68938514702bebd049944e943f, type: 3}
+  drink:
+  - {fileID: 8300000, guid: 1ae187cf1e3524aa68f9ae328e03f453, type: 3}
+  - {fileID: 8300000, guid: 82673d20dfa744dce971412bc9a3d664, type: 3}
+  playerHit:
+  - {fileID: 8300000, guid: 2b62c997684314fdb891151cdd0603c9, type: 3}
+  - {fileID: 8300000, guid: b4c4c463c04fc4f688ebd0f610e28d32, type: 3}
+  - {fileID: 8300000, guid: fb52a53e54e9d44629e2cab2b43c3294, type: 3}
+  playerChop:
+  - {fileID: 8300000, guid: ea3855045c2ef44a4b7f47623b0a17f6, type: 3}
+  - {fileID: 8300000, guid: f644ccdfb28e94fb5a38c7fc45ce7b66, type: 3}
+  - {fileID: 8300000, guid: d6dc446ca88064f67af7ea57b5447ecc, type: 3}
+  burp:
+  - {fileID: 8300000, guid: 55c0331d3e9924e70a78c60b77b3af92, type: 3}
+  - {fileID: 8300000, guid: 133ea01ad7cd24ed0b5cef26f9dc9309, type: 3}
 --- !u!212 &21246652
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -130,7 +154,131 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: eat.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: burp.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: drink.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerHit.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: playerChop.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: footstep
+      value: 
+      objectReference: {fileID: 8300000, guid: 3e00018d82c804b98a2115f118994d3f, type: 3}
+    - target: {fileID: 0}
+      propertyPath: eat
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ecb55a2387a64cd3911e2ad8ee5ff22, type: 3}
+    - target: {fileID: 0}
+      propertyPath: drink
+      value: 
+      objectReference: {fileID: 8300000, guid: 82673d20dfa744dce971412bc9a3d664, type: 3}
+    - target: {fileID: 0}
+      propertyPath: playerHit
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b62c997684314fdb891151cdd0603c9, type: 3}
+    - target: {fileID: 0}
+      propertyPath: playerChop
+      value: 
+      objectReference: {fileID: 8300000, guid: d6dc446ca88064f67af7ea57b5447ecc, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3e00018d82c804b98a2115f118994d3f, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 80980519aa9d3422187bbf7739b536dd, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: a5d9120a00f964e4c8f64913d690ebe9, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: ff251fe595ff3402b841b445668c0c18, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9c5b17c1a6eef47b4ae672f042b4b3b8, type: 3}
+    - target: {fileID: 0}
+      propertyPath: burp.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 55c0331d3e9924e70a78c60b77b3af92, type: 3}
+    - target: {fileID: 0}
+      propertyPath: burp.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 133ea01ad7cd24ed0b5cef26f9dc9309, type: 3}
+    - target: {fileID: 0}
+      propertyPath: playerChop.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: ea3855045c2ef44a4b7f47623b0a17f6, type: 3}
+    - target: {fileID: 0}
+      propertyPath: playerChop.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: f644ccdfb28e94fb5a38c7fc45ce7b66, type: 3}
+    - target: {fileID: 0}
+      propertyPath: playerChop.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: d6dc446ca88064f67af7ea57b5447ecc, type: 3}
+    - target: {fileID: 0}
+      propertyPath: playerChop.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: d6dc446ca88064f67af7ea57b5447ecc, type: 3}
+    - target: {fileID: 0}
+      propertyPath: drink.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1ae187cf1e3524aa68f9ae328e03f453, type: 3}
+    - target: {fileID: 0}
+      propertyPath: drink.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 82673d20dfa744dce971412bc9a3d664, type: 3}
+    - target: {fileID: 0}
+      propertyPath: eat.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ecb55a2387a64cd3911e2ad8ee5ff22, type: 3}
+    - target: {fileID: 0}
+      propertyPath: eat.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 548f95ee4dbb4402baeed9502e86c054, type: 3}
+    - target: {fileID: 0}
+      propertyPath: eat.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 233d7d68938514702bebd049944e943f, type: 3}
+    - target: {fileID: 0}
+      propertyPath: playerHit.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b62c997684314fdb891151cdd0603c9, type: 3}
+    - target: {fileID: 0}
+      propertyPath: playerHit.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: b4c4c463c04fc4f688ebd0f610e28d32, type: 3}
+    - target: {fileID: 0}
+      propertyPath: playerHit.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: fb52a53e54e9d44629e2cab2b43c3294, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 146652}

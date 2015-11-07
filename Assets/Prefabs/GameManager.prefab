@@ -44,6 +44,7 @@ MonoBehaviour:
   turnDelay: .100000001
   playerFoodPoints: 100
   playersTurn: 1
+  hit: {fileID: 8300000, guid: d93e11fa091744be4857f1bfeb581a48, type: 3}
 --- !u!114 &11433658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,7 +99,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: hit
+      value: 
+      objectReference: {fileID: 8300000, guid: d93e11fa091744be4857f1bfeb581a48, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 133658}

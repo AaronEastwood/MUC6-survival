@@ -13,7 +13,8 @@ namespace Completed
 		public int playerFoodPoints = 100;						//Starting value for Player food points.
 		public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
 		[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
-		
+
+		public AudioClip hit = null;
 		
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
@@ -48,7 +49,7 @@ namespace Completed
 			
 			//Get a component reference to the attached BoardManager script
 			boardScript = GetComponent<BoardManager>();
-			
+
 			//Call the InitGame function to initialize the first level 
 			InitGame();
 		}
@@ -58,6 +59,10 @@ namespace Completed
 		{
 			//Add one to our level number.
 			level++;
+
+			//Play Hit
+			//SoundManager.instance.PlaySound (hit);
+
 			//Call InitGame to initialize our level.
 			InitGame();
 		}
@@ -79,6 +84,9 @@ namespace Completed
 			
 			//Set levelImage to active blocking player's view of the game board during setup.
 			levelImage.SetActive(true);
+
+			//Stop Music
+			MusicManager.instance.PlayHit ();
 			
 			//Call the HideLevelImage function with a delay in seconds of levelStartDelay.
 			Invoke("HideLevelImage", levelStartDelay);
@@ -95,6 +103,9 @@ namespace Completed
 		//Hides black image used between levels
 		void HideLevelImage()
 		{
+			//Play Music
+			MusicManager.instance.PlayMusic ();
+
 			//Disable the levelImage gameObject.
 			levelImage.SetActive(false);
 			
@@ -126,6 +137,9 @@ namespace Completed
 		//GameOver is called when the player reaches 0 food points
 		public void GameOver()
 		{
+			//Stop Music
+			MusicManager.instance.StopMusic ();
+
 			//Set levelText to display number of levels passed and game over message
 			if (level == 1)
 				levelText.text = "After " + level + " day, you starved.";
