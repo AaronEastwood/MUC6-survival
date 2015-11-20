@@ -44,6 +44,7 @@ MonoBehaviour:
   turnDelay: .100000001
   playerFoodPoints: 100
   playersTurn: 1
+  soundManager: {fileID: 154120, guid: 76cd81135280f4ad6a4fa80f6422aea2, type: 2}
   hit: {fileID: 8300000, guid: d93e11fa091744be4857f1bfeb581a48, type: 3}
   ambiance: {fileID: 8300000, guid: d1635588907e046b9babd1c1e6009251, type: 3}
   spookyScary: {fileID: 8300000, guid: f51f779c29b9848dd93abd10d8e2bd39, type: 3}
@@ -54,7 +55,20 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a6f86ea6b2b3147b9aac62a8f27dc2cc, type: 3}
   - {fileID: 8300000, guid: b0741d955481e4de08a6acc644585e4a, type: 3}
   - {fileID: 8300000, guid: 075a39b71a1ca48ecbf569a4943504d7, type: 3}
-  soundManager: {fileID: 154120, guid: 76cd81135280f4ad6a4fa80f6422aea2, type: 2}
+  heartbeat: {fileID: 8300000, guid: f16766ac5eaeb4240bc2b22e7558dbd3, type: 3}
+  sfx: {fileID: 24335248, guid: cb25e08211d334b668cf4938be6a9321, type: 2}
+  amb: {fileID: 24359536, guid: 473965ee7e825469789746dff6de812c, type: 2}
+  mxNorm: {fileID: 24398878, guid: 622b418897e764f8cbdf8eb60a97d4a6, type: 2}
+  mxSpecial: {fileID: 24307888, guid: 622b418897e764f8cbdf8eb60a97d4a6, type: 2}
+  mxDeath: {fileID: 24350396, guid: 622b418897e764f8cbdf8eb60a97d4a6, type: 2}
+  dayMix: {fileID: 24347990, guid: 1df5c8197d0794cc89f306e9ec3c192b, type: 2}
+  heartbeatMix: {fileID: 24358124, guid: 473965ee7e825469789746dff6de812c, type: 2}
+  musNormal: {fileID: 24500003, guid: 622b418897e764f8cbdf8eb60a97d4a6, type: 2}
+  ambNormal: {fileID: 24500003, guid: 473965ee7e825469789746dff6de812c, type: 2}
+  musLowHealth: {fileID: 24528884, guid: 622b418897e764f8cbdf8eb60a97d4a6, type: 2}
+  ambLowHealth: {fileID: 24501306, guid: 473965ee7e825469789746dff6de812c, type: 2}
+  musOff: {fileID: 24566008, guid: 622b418897e764f8cbdf8eb60a97d4a6, type: 2}
+  ambOff: {fileID: 24565424, guid: 473965ee7e825469789746dff6de812c, type: 2}
 --- !u!114 &11433658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,6 +168,95 @@ Prefab:
       propertyPath: gameOverMusic
       value: 
       objectReference: {fileID: 8300000, guid: 5fe618e60368e45b7b2ab80a25595bcb, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sfx
+      value: 
+      objectReference: {fileID: 24335248, guid: cb25e08211d334b668cf4938be6a9321,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: amb
+      value: 
+      objectReference: {fileID: 24359536, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: mx
+      value: 
+      objectReference: {fileID: 24383546, guid: cb25e08211d334b668cf4938be6a9321,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: dayMix
+      value: 
+      objectReference: {fileID: 24347990, guid: 1df5c8197d0794cc89f306e9ec3c192b,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: heartbeatMix
+      value: 
+      objectReference: {fileID: 24358124, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: heartbeat
+      value: 
+      objectReference: {fileID: 8300000, guid: f16766ac5eaeb4240bc2b22e7558dbd3, type: 3}
+    - target: {fileID: 0}
+      propertyPath: mxNorm
+      value: 
+      objectReference: {fileID: 24398878, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: mxSpecial
+      value: 
+      objectReference: {fileID: 24307888, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: mxDeath
+      value: 
+      objectReference: {fileID: 24350396, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ambFade
+      value: 
+      objectReference: {fileID: 24565424, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: musFade
+      value: 
+      objectReference: {fileID: 24566008, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: sfxFade
+      value: 
+      objectReference: {fileID: 24519728, guid: 1df5c8197d0794cc89f306e9ec3c192b,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ambOff
+      value: 
+      objectReference: {fileID: 24565424, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: musOff
+      value: 
+      objectReference: {fileID: 24566008, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ambNormal
+      value: 
+      objectReference: {fileID: 24500003, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: musNormal
+      value: 
+      objectReference: {fileID: 24500003, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: musLowHealth
+      value: 
+      objectReference: {fileID: 24528884, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ambLowHealth
+      value: 
+      objectReference: {fileID: 24501306, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 133658}

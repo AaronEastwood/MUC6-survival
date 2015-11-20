@@ -95,6 +95,8 @@ MonoBehaviour:
     m_Bits: 256
   playerDamage: 10
   enemyAttack: {fileID: 8300000, guid: 0a20c946fb205416ab501db96b862ba2, type: 3}
+  sfx: {fileID: 24335248, guid: cb25e08211d334b668cf4938be6a9321, type: 2}
+  vocalMix: {fileID: 24351734, guid: fbc9298be239146aea52bf9ad1cf0074, type: 2}
 --- !u!212 &21295068
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -132,6 +134,16 @@ Prefab:
       propertyPath: enemyAttack
       value: 
       objectReference: {fileID: 8300000, guid: 0a20c946fb205416ab501db96b862ba2, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sfx
+      value: 
+      objectReference: {fileID: 24335248, guid: cb25e08211d334b668cf4938be6a9321,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: vocalMix
+      value: 
+      objectReference: {fileID: 24351734, guid: fbc9298be239146aea52bf9ad1cf0074,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 195068}

@@ -1,36 +1,51 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;									//Added this to enable access to AudioMixerGroup and AudioSnapshot data types
 using System.Collections;
 
 namespace Completed
 {
-	using System.Collections.Generic;		//Allows us to use Lists. 
-	using UnityEngine.UI;					//Allows us to use UI.
+	using System.Collections.Generic;						//Allows us to use Lists. 
+	using UnityEngine.UI;									//Allows us to use UI.
 	
 	public class GameManager : MonoBehaviour
 	{
-		public float levelStartDelay = 2f;						//Time to wait before starting level, in seconds.
-		public float turnDelay = 0.1f;							//Delay between each Player turn.
-		public int playerFoodPoints = 100;						//Starting value for Player food points.
-		public static GameManager instance = null;				//Static instance of GameManager which allows it to be accessed by any other script.
-		[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
+		public float levelStartDelay = 2f;					//Time to wait before starting level, in seconds.
+		public float turnDelay = 0.1f;						//Delay between each Player turn.
+		public int playerFoodPoints = 100;					//Starting value for Player food points.
+		public static GameManager instance = null;			//Static instance of GameManager which allows it to be accessed by any other script.
+		[HideInInspector] public bool playersTurn = true;	//Boolean to check if it's players turn, hidden in inspector but public.
 
-		public AudioClip hit = null;
-		public AudioClip ambiance = null;
-		public AudioClip spookyScary = null;
-		public AudioClip gameOverMusic = null;
-		public AudioClip[] music = null;
-		public GameObject soundManager = null;
-		
-		private Text levelText;									//Text to display current level number.
-		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
-		private BoardManager boardScript;						//Store a reference to our BoardManager which will set up the level.
-		private int level = 1;									//Current level number, expressed in game as "Day 1".
-		private List<Enemy> enemies;							//List of all Enemy units, used to issue them move commands.
-		private bool enemiesMoving;								//Boolean to check if enemies are moving.
-		private bool doingSetup = true;							//Boolean to check if we're setting up board, prevent Player from moving during setup.
-		
-		
-		
+		public GameObject soundManager = null;				//Used to create an instance of the sound manager when the game first starts
+
+		public AudioClip hit = null;						//The sound effect that accompanies the level start screen
+		public AudioClip ambiance = null;					//The ambiance track
+		public AudioClip spookyScary = null;				//Super secret music Easter Egg :)
+		public AudioClip gameOverMusic = null;				//Music for the Game Over screen
+		public AudioClip[] music = null;					//Array containing the background music clips
+		public AudioClip heartbeat = null;					//Heatbeat that plays when health is low
+
+		public AudioMixerGroup amb = null;					//Ambiance mixer group
+		public AudioMixerGroup mxNorm = null;				//General BGM mixer group
+		public AudioMixerGroup mxSpecial = null;			//Special BGM mixer group
+		public AudioMixerGroup mxDeath = null;				//Game over screen BGM mixer group
+		public AudioMixerGroup dayMix = null;				//Level start screen mixer group
+		public AudioMixerGroup heartbeatMix = null;			//Heartbeat ambiance mixer group
+
+		public AudioMixerSnapshot musNormal = null;			//Snapshot for normal music
+		public AudioMixerSnapshot ambNormal = null;			//Snapshot for normal ambiance
+		public AudioMixerSnapshot musLowHealth = null;		//Snapshot for music when health is low
+		public AudioMixerSnapshot ambLowHealth = null;		//Snapshot for ambiance when health is low
+		public AudioMixerSnapshot musOff = null;			//Snapshot used to silence music
+		public AudioMixerSnapshot ambOff = null;			//Snapshot used to silence ambiance
+
+		private Text levelText;								//Text to display current level number.
+		private GameObject levelImage;						//Image to block out level as levels are being set up, background for levelText.
+		private BoardManager boardScript;					//Store a reference to our BoardManager which will set up the level.
+		private int level = 1;								//Current level number, expressed in game as "Day 1".
+		private List<Enemy> enemies;						//List of all Enemy units, used to issue them move commands.
+		private bool enemiesMoving;							//Boolean to check if enemies are moving.
+		private bool doingSetup = true;						//Boolean to check if we're setting up board, prevent Player from moving during setup.
+
 		//Awake is always called before any Start functions
 		void Awake()
 		{
@@ -65,9 +80,6 @@ namespace Completed
 			//Add one to our level number.
 			level++;
 
-			//Play Hit
-			//SoundManager.instance.PlaySound (hit);
-
 			//Call InitGame to initialize our level.
 			InitGame();
 		}
@@ -75,6 +87,7 @@ namespace Completed
 		//Initializes the game for each level.
 		void InitGame()
 		{
+
 			//While doingSetup is true the player can't move, prevent player from moving while title card is up.
 			doingSetup = true;
 			
@@ -90,11 +103,12 @@ namespace Completed
 			//Set levelImage to active blocking player's view of the game board during setup.
 			levelImage.SetActive(true);
 
+			//Used to create an instance of Sound Manager when the game first starts
 			if (SoundManager.instance == null)
 				Instantiate (soundManager);
 
 			//Play Hit Sound
-			SoundManager.instance.PlaySound (hit);
+			SoundManager.instance.PlaySound (hit, 1.0f, dayMix);
 			
 			//Call the HideLevelImage function with a delay in seconds of levelStartDelay.
 			Invoke("HideLevelImage", levelStartDelay);
@@ -110,18 +124,29 @@ namespace Completed
 		//Hides black image used between levels
 		void HideLevelImage()
 		{
-
 			//Play Ambiance
-			SoundManager.instance.PlayAmbiance (ambiance);
+			if (playerFoodPoints <= 50) //checks the number of food points remaining
+			{
+				//Transitions to the low health snapshots when food poins are below 50
+				SoundManager.instance.ToSnapshot (musLowHealth, 0.0f);
+				SoundManager.instance.ToSnapshot (ambLowHealth, 0.0f);
+			} 
+			else 
+			{
+				//Transitions to the normal snapshots when food points are 50 or above
+				SoundManager.instance.ToSnapshot (musNormal, 0.0f);
+				SoundManager.instance.ToSnapshot (ambNormal, 0.0f);
+			}
+
+			SoundManager.instance.PlayAmbiance (ambiance, amb);
+			SoundManager.instance.PlayAmbiance (heartbeat, heartbeatMix);
 
 			//Play Music
-			int rand = Random.Range (0, 100);
-			if (rand < 10)
-				SoundManager.instance.PlayMusic (spookyScary);
+			int rand = Random.Range (0, 100); 														//Gets a random number used to determine if the special music plays
+			if (rand < 10) 																			//Sets up a 10% chance that the special music will play
+				SoundManager.instance.PlayMusic (spookyScary, mxSpecial);							//Plays the special music
 			if (rand >= 10)
-				SoundManager.instance.PlayMusic (music [Random.Range (0, music.Length)]);
-
-			print (rand);
+				SoundManager.instance.PlayMusic (music [Random.Range (0, music.Length)], mxNorm); 	//Plays one of five normal music clips
 
 			//Disable the levelImage gameObject.
 			levelImage.SetActive(false);
@@ -154,10 +179,14 @@ namespace Completed
 		//GameOver is called when the player reaches 0 food points
 		public void GameOver()
 		{
-			SoundManager.instance.Stop ("sfx");
-			SoundManager.instance.Stop ("ambiance");
-			SoundManager.instance.Stop ("music");
-			SoundManager.instance.PlayMusic (gameOverMusic);
+
+			//SoundManager.instance.ToSnapshot (musOff, 0.0f); 		//For some reason, this didn't work in the case of Game Over
+			//SoundManager.instance.ToSnapshot (ambOff, 0.0f);		//For some reason, this didn't work in the case of Game Over
+
+			SoundManager.instance.Stop ("ambiance");				//Workaround for the above and for issue with singleton
+			SoundManager.instance.Stop ("music");					//Workaround for the above and for issue with singleton
+
+			SoundManager.instance.PlayMusic (gameOverMusic, mxDeath);
 
 			//Set levelText to display number of levels passed and game over message
 			if (level == 1)

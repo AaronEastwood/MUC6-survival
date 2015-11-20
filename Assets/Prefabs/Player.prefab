@@ -119,9 +119,17 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ea3855045c2ef44a4b7f47623b0a17f6, type: 3}
   - {fileID: 8300000, guid: f644ccdfb28e94fb5a38c7fc45ce7b66, type: 3}
   - {fileID: 8300000, guid: d6dc446ca88064f67af7ea57b5447ecc, type: 3}
-  burp:
-  - {fileID: 8300000, guid: 55c0331d3e9924e70a78c60b77b3af92, type: 3}
-  - {fileID: 8300000, guid: 133ea01ad7cd24ed0b5cef26f9dc9309, type: 3}
+  sfx: {fileID: 24335248, guid: cb25e08211d334b668cf4938be6a9321, type: 2}
+  footstepsMix: {fileID: 24302300, guid: 1df5c8197d0794cc89f306e9ec3c192b, type: 2}
+  chopMix: {fileID: 24346808, guid: 1df5c8197d0794cc89f306e9ec3c192b, type: 2}
+  eatMix: {fileID: 24367368, guid: 1df5c8197d0794cc89f306e9ec3c192b, type: 2}
+  vocalMix: {fileID: 24328950, guid: fbc9298be239146aea52bf9ad1cf0074, type: 2}
+  musNormal: {fileID: 24500003, guid: 622b418897e764f8cbdf8eb60a97d4a6, type: 2}
+  ambNormal: {fileID: 24500003, guid: 473965ee7e825469789746dff6de812c, type: 2}
+  musLowHealth: {fileID: 24528884, guid: 622b418897e764f8cbdf8eb60a97d4a6, type: 2}
+  ambLowHealth: {fileID: 24501306, guid: 473965ee7e825469789746dff6de812c, type: 2}
+  musOff: {fileID: 24566008, guid: 622b418897e764f8cbdf8eb60a97d4a6, type: 2}
+  ambOff: {fileID: 24565424, guid: 473965ee7e825469789746dff6de812c, type: 2}
 --- !u!212 &21246652
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -178,6 +186,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: playerChop.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: stomachGrowl.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Enabled
@@ -279,6 +291,94 @@ Prefab:
       propertyPath: playerHit.Array.data[2]
       value: 
       objectReference: {fileID: 8300000, guid: fb52a53e54e9d44629e2cab2b43c3294, type: 3}
+    - target: {fileID: 0}
+      propertyPath: sfx
+      value: 
+      objectReference: {fileID: 24335248, guid: cb25e08211d334b668cf4938be6a9321,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: footstepsMix
+      value: 
+      objectReference: {fileID: 24302300, guid: 1df5c8197d0794cc89f306e9ec3c192b,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: chopMix
+      value: 
+      objectReference: {fileID: 24346808, guid: 1df5c8197d0794cc89f306e9ec3c192b,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: eatMix
+      value: 
+      objectReference: {fileID: 24367368, guid: 1df5c8197d0794cc89f306e9ec3c192b,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: vocalMix
+      value: 
+      objectReference: {fileID: 24328950, guid: fbc9298be239146aea52bf9ad1cf0074,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: stomachGrowl.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: f16766ac5eaeb4240bc2b22e7558dbd3, type: 3}
+    - target: {fileID: 0}
+      propertyPath: stomachGrowl.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9fe601afafb5c40a79c95f6352bdd3f0, type: 3}
+    - target: {fileID: 0}
+      propertyPath: lowHealth
+      value: 
+      objectReference: {fileID: 24501306, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: lowHealthMus
+      value: 
+      objectReference: {fileID: 24528884, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: lowHealthAmb
+      value: 
+      objectReference: {fileID: 24501306, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: normalAmb
+      value: 
+      objectReference: {fileID: 24500003, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: normalMus
+      value: 
+      objectReference: {fileID: 24500003, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ambOff
+      value: 
+      objectReference: {fileID: 24565424, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: musOff
+      value: 
+      objectReference: {fileID: 24566008, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: musNormal
+      value: 
+      objectReference: {fileID: 24500003, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ambNormal
+      value: 
+      objectReference: {fileID: 24500003, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: ambLowHealth
+      value: 
+      objectReference: {fileID: 24501306, guid: 473965ee7e825469789746dff6de812c,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: musLowHealth
+      value: 
+      objectReference: {fileID: 24528884, guid: 622b418897e764f8cbdf8eb60a97d4a6,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 146652}

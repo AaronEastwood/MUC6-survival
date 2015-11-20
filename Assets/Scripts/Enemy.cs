@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;									//Added this to enable access to AudioMixerGroup and AudioSnapshot data types
 using System.Collections;
 
 namespace Completed
@@ -9,6 +10,8 @@ namespace Completed
 		public int playerDamage; 							//The amount of food points to subtract from the player when attacking.
 
 		public AudioClip enemyAttack = null;
+		public AudioMixerGroup sfx = null;
+		public AudioMixerGroup vocalMix = null;
 		
 		private Animator animator;							//Variable of type Animator to store a reference to the enemy's Animator component.
 		private Transform target;							//Transform to attempt to move toward each turn.
@@ -91,7 +94,7 @@ namespace Completed
 			animator.SetTrigger ("enemyAttack");
 
 			//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
-			SoundManager.instance.PlaySound (enemyAttack);
+			SoundManager.instance.PlaySound (enemyAttack, Random.Range (0.90f, 1.10f), vocalMix);
 			
 		}
 	}

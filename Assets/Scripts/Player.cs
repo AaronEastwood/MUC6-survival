@@ -1,27 +1,39 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;								//Added this to enable access to AudioMixerGroup and AudioSnapshot data types
 using System.Collections;
-using UnityEngine.UI;	//Allows us to use UI.
+using UnityEngine.UI;									//Allows us to use UI.
 
 namespace Completed
 {
 	//Player inherits from MovingObject, our base class for objects that can move, Enemy also inherits from this.
 	public class Player : MovingObject
 	{
-		public float restartLevelDelay = 1f;		//Delay time in seconds to restart level.
-		public int pointsPerFood = 10;				//Number of points to add to player food points when picking up a food object.
-		public int pointsPerSoda = 20;				//Number of points to add to player food points when picking up a soda object.
-		public int wallDamage = 1;					//How much damage a player does to a wall when chopping it.
-		public Text foodText;						//UI Text to display current player food total.
+		public float restartLevelDelay = 1f;			//Delay time in seconds to restart level.
+		public int pointsPerFood = 10;					//Number of points to add to player food points when picking up a food object.
+		public int pointsPerSoda = 20;					//Number of points to add to player food points when picking up a soda object.
+		public int wallDamage = 1;						//How much damage a player does to a wall when chopping it.
+		public Text foodText;							//UI Text to display current player food total.
 
 		public AudioClip[] footsteps = null;			//Footstep sound effect
-		public AudioClip[] eat = null;				//Eat sound effect
-		public AudioClip[] drink = null;
-		public AudioClip[] playerHit = null;
-		public AudioClip[] playerChop = null;
-		public AudioClip[] burp = null;
+		public AudioClip[] eat = null;					//Eat sound effect
+		public AudioClip[] drink = null;				//Drink sound effect
+		public AudioClip[] playerHit = null;			//Sound that accompanies the level start screen
+		public AudioClip[] playerChop = null;			//Player chopping bush sound effect	
+
+		public AudioMixerGroup footstepsMix = null;		//Audio mixer for footsteps
+		public AudioMixerGroup chopMix = null;			//Audio mixer for chopping sounds
+		public AudioMixerGroup eatMix = null;			//Audio mixer for eating sounds
+		public AudioMixerGroup vocalMix = null;			//Audio mixer for vocal sounds
+
+		public AudioMixerSnapshot musNormal = null;		//Snapshot of music faders when the player's state is nornmal
+		public AudioMixerSnapshot ambNormal = null; 	//Snapshot of ambiance faders when the player's state is nornmal
+		public AudioMixerSnapshot musLowHealth = null;	//Snapshot of music faders when the player's food points are low
+		public AudioMixerSnapshot ambLowHealth = null;	//Snapshot of ambiance faders when the player's food points are low
+		public AudioMixerSnapshot musOff = null;		//Snapshot of the music faders after End of Day and Game Over
+		public AudioMixerSnapshot ambOff = null;		//Snapshot of the ambiance faders after End of Day and Game Over
 		
-		private Animator animator;					//Used to store a reference to the Player's animator component.
-		private int food;							//Used to store player food points total during level.
+		private Animator animator;						//Used to store a reference to the Player's animator component.
+		private int food;								//Used to store player food points total during level.
 		//private Vector2 touchOrigin = -Vector2.one;	//Used to store location of screen touch origin for mobile controls.
 		
 		
@@ -143,7 +155,8 @@ namespace Completed
 			if (Move (xDir, yDir, out hit)) 
 			{
 				//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
-				SoundManager.instance.PlaySound (footsteps[Random.Range(0, footsteps.Length)]);
+				//Arguments passed are: the sound effect name (array), a random array element number, the pitch (float), and the mixer group
+				SoundManager.instance.PlaySound (footsteps[Random.Range(0, footsteps.Length)], Random.Range (0.95f,1.05f), footstepsMix);
 			}
 			
 			//Since the player has moved and lost food points, check if the game has ended.
@@ -168,7 +181,8 @@ namespace Completed
 			animator.SetTrigger ("playerChop");
 
 			//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
-			SoundManager.instance.PlaySound (playerChop[Random.Range(0, playerChop.Length)]);
+			//Arguments passed are: the sound effect name (array), a random array element number, the pitch (float), and the mixer group
+			SoundManager.instance.PlaySound (playerChop[Random.Range(0, playerChop.Length)], Random.Range (0.95f,1.05f), chopMix);
 		}
 		
 		
@@ -178,6 +192,10 @@ namespace Completed
 			//Check if the tag of the trigger collided with is Exit.
 			if(other.tag == "Exit")
 			{
+				//Fades out the music and mabiance
+				SoundManager.instance.ToSnapshot (musOff, 2.0f);
+				SoundManager.instance.ToSnapshot (ambOff, 2.0f);
+
 				//Invoke the Restart function to start the next level with a delay of restartLevelDelay (default 1 second).
 				Invoke ("Restart", restartLevelDelay);
 				
@@ -193,12 +211,26 @@ namespace Completed
 				
 				//Update foodText to represent current total and notify player that they gained points
 				foodText.text = "+" + pointsPerFood + " Food: " + food;
-				
+
+				if (food <= 50) //checks the number of food points remaining
+				{
+					//Transitions to the low health snapshots when food poins are below 50
+					SoundManager.instance.ToSnapshot (musLowHealth, 3.0f);
+					SoundManager.instance.ToSnapshot (ambLowHealth, 0.3f);
+				} 
+				else 
+				{
+					//Transitions to the normal snapshots when food points are 50 or above
+					SoundManager.instance.ToSnapshot (musNormal, 1.0f);
+					SoundManager.instance.ToSnapshot (ambNormal, 1.0f);
+				}
+
 				//Disable the food object the player collided with.
 				other.gameObject.SetActive (false);
 
 				//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
-				SoundManager.instance.PlaySound (eat[Random.Range(0, eat.Length)]);
+				//Arguments passed are: the sound effect name (array), a random array element number, the pitch (float), and the mixer group
+				SoundManager.instance.PlaySound (eat[Random.Range (0, eat.Length)], Random.Range (0.95f, 1.05f), eatMix);
 			}
 			
 			//Check if the tag of the trigger collided with is Soda.
@@ -209,13 +241,26 @@ namespace Completed
 				
 				//Update foodText to represent current total and notify player that they gained points
 				foodText.text = "+" + pointsPerSoda + " Food: " + food;
-				
+
+				if (food <= 50) //checks the number of food points remaining
+				{
+					//Transitions to the low health snapshots when food poins are below 50
+					SoundManager.instance.ToSnapshot (musLowHealth, 3.0f);
+					SoundManager.instance.ToSnapshot (ambLowHealth, 0.3f);
+				} 
+				else 
+				{
+					//Transitions to the normal snapshots when food points are 50 or above
+					SoundManager.instance.ToSnapshot (musNormal, 1.0f);
+					SoundManager.instance.ToSnapshot (ambNormal, 1.0f);
+				}
 				
 				//Disable the soda object the player collided with.
 				other.gameObject.SetActive (false);
 
 				//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
-				SoundManager.instance.PlaySound (drink[Random.Range (0, drink.Length)]);
+				//Arguments passed are: the sound effect name (array), a random array element number, the pitch (float), and the mixer group
+				SoundManager.instance.PlaySound (drink[Random.Range (0, drink.Length)], Random.Range (0.95f, 1.05f), eatMix);
 			}
 		}
 		
@@ -236,14 +281,15 @@ namespace Completed
 			animator.SetTrigger ("playerHit");
 
 			//Play sound -- MUST have ".instance" to specify the particular object: "[Script].[variableNameFromScript].[FunctionName]"
-			SoundManager.instance.PlaySound (playerHit[Random.Range(0, playerHit.Length)]);
+			//Arguments passed are: the sound effect name (array), a random array element number, the pitch (float), and the mixer group
+			SoundManager.instance.PlaySound (playerHit[Random.Range(0, playerHit.Length)], 1.0f, vocalMix);
 			
 			//Subtract lost food points from the players total.
 			food -= loss;
 			
 			//Update the food display with the new total.
 			foodText.text = "-"+ loss + " Food: " + food;
-			
+
 			//Check to see if game has ended.
 			CheckIfGameOver ();
 		}
@@ -257,6 +303,19 @@ namespace Completed
 			{
 				//Call the GameOver function of GameManager.
 				GameManager.instance.GameOver ();
+			}
+
+			if (food <= 50) //checks the number of food points remaining
+			{
+				//Transitions to the low health snapshots when food poins are below 50
+				SoundManager.instance.ToSnapshot (musLowHealth, 3.0f);
+				SoundManager.instance.ToSnapshot (ambLowHealth, 0.3f);
+			} 
+			else 
+			{
+				//Transitions to the normal snapshots when food points are 50 or above
+				SoundManager.instance.ToSnapshot (musNormal, 1.0f);
+				SoundManager.instance.ToSnapshot (ambNormal, 1.0f);
 			}
 		}
 	}
