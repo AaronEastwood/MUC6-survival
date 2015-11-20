@@ -45,6 +45,16 @@ MonoBehaviour:
   playerFoodPoints: 100
   playersTurn: 1
   hit: {fileID: 8300000, guid: d93e11fa091744be4857f1bfeb581a48, type: 3}
+  ambiance: {fileID: 8300000, guid: d1635588907e046b9babd1c1e6009251, type: 3}
+  spookyScary: {fileID: 8300000, guid: f51f779c29b9848dd93abd10d8e2bd39, type: 3}
+  gameOverMusic: {fileID: 8300000, guid: 5fe618e60368e45b7b2ab80a25595bcb, type: 3}
+  music:
+  - {fileID: 8300000, guid: 13533613533174803b14ef5657e424b1, type: 3}
+  - {fileID: 8300000, guid: de08eeabed0ee45a983a40f4e78bcb83, type: 3}
+  - {fileID: 8300000, guid: a6f86ea6b2b3147b9aac62a8f27dc2cc, type: 3}
+  - {fileID: 8300000, guid: b0741d955481e4de08a6acc644585e4a, type: 3}
+  - {fileID: 8300000, guid: 075a39b71a1ca48ecbf569a4943504d7, type: 3}
+  soundManager: {fileID: 154120, guid: 76cd81135280f4ad6a4fa80f6422aea2, type: 2}
 --- !u!114 &11433658
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -101,9 +111,49 @@ Prefab:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 0}
+      propertyPath: music.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
       propertyPath: hit
       value: 
       objectReference: {fileID: 8300000, guid: d93e11fa091744be4857f1bfeb581a48, type: 3}
+    - target: {fileID: 0}
+      propertyPath: ambiance
+      value: 
+      objectReference: {fileID: 8300000, guid: d1635588907e046b9babd1c1e6009251, type: 3}
+    - target: {fileID: 0}
+      propertyPath: soundManager
+      value: 
+      objectReference: {fileID: 154120, guid: 76cd81135280f4ad6a4fa80f6422aea2, type: 2}
+    - target: {fileID: 0}
+      propertyPath: music.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 13533613533174803b14ef5657e424b1, type: 3}
+    - target: {fileID: 0}
+      propertyPath: music.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: de08eeabed0ee45a983a40f4e78bcb83, type: 3}
+    - target: {fileID: 0}
+      propertyPath: music.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: a6f86ea6b2b3147b9aac62a8f27dc2cc, type: 3}
+    - target: {fileID: 0}
+      propertyPath: music.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: b0741d955481e4de08a6acc644585e4a, type: 3}
+    - target: {fileID: 0}
+      propertyPath: music.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 075a39b71a1ca48ecbf569a4943504d7, type: 3}
+    - target: {fileID: 0}
+      propertyPath: spookyScary
+      value: 
+      objectReference: {fileID: 8300000, guid: f51f779c29b9848dd93abd10d8e2bd39, type: 3}
+    - target: {fileID: 0}
+      propertyPath: gameOverMusic
+      value: 
+      objectReference: {fileID: 8300000, guid: 5fe618e60368e45b7b2ab80a25595bcb, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 133658}

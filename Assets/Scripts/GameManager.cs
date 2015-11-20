@@ -15,6 +15,11 @@ namespace Completed
 		[HideInInspector] public bool playersTurn = true;		//Boolean to check if it's players turn, hidden in inspector but public.
 
 		public AudioClip hit = null;
+		public AudioClip ambiance = null;
+		public AudioClip spookyScary = null;
+		public AudioClip gameOverMusic = null;
+		public AudioClip[] music = null;
+		public GameObject soundManager = null;
 		
 		private Text levelText;									//Text to display current level number.
 		private GameObject levelImage;							//Image to block out level as levels are being set up, background for levelText.
@@ -43,7 +48,7 @@ namespace Completed
 			
 			//Sets this to not be destroyed when reloading scene
 			DontDestroyOnLoad(gameObject);
-			
+
 			//Assign enemies to a new List of Enemy objects.
 			enemies = new List<Enemy>();
 			
@@ -85,8 +90,11 @@ namespace Completed
 			//Set levelImage to active blocking player's view of the game board during setup.
 			levelImage.SetActive(true);
 
-			//Stop Music
-			MusicManager.instance.PlayHit ();
+			if (SoundManager.instance == null)
+				Instantiate (soundManager);
+
+			//Play Hit Sound
+			SoundManager.instance.PlaySound (hit);
 			
 			//Call the HideLevelImage function with a delay in seconds of levelStartDelay.
 			Invoke("HideLevelImage", levelStartDelay);
@@ -96,15 +104,24 @@ namespace Completed
 			
 			//Call the SetupScene function of the BoardManager script, pass it current level number.
 			boardScript.SetupScene(level);
-			
 		}
 		
 		
 		//Hides black image used between levels
 		void HideLevelImage()
 		{
+
+			//Play Ambiance
+			SoundManager.instance.PlayAmbiance (ambiance);
+
 			//Play Music
-			MusicManager.instance.PlayMusic ();
+			int rand = Random.Range (0, 100);
+			if (rand < 10)
+				SoundManager.instance.PlayMusic (spookyScary);
+			if (rand >= 10)
+				SoundManager.instance.PlayMusic (music [Random.Range (0, music.Length)]);
+
+			print (rand);
 
 			//Disable the levelImage gameObject.
 			levelImage.SetActive(false);
@@ -137,8 +154,10 @@ namespace Completed
 		//GameOver is called when the player reaches 0 food points
 		public void GameOver()
 		{
-			//Stop Music
-			MusicManager.instance.StopMusic ();
+			SoundManager.instance.Stop ("sfx");
+			SoundManager.instance.Stop ("ambiance");
+			SoundManager.instance.Stop ("music");
+			SoundManager.instance.PlayMusic (gameOverMusic);
 
 			//Set levelText to display number of levels passed and game over message
 			if (level == 1)

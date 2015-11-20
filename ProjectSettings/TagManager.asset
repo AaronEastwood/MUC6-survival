@@ -8,6 +8,9 @@ TagManager:
   - Exit
   - Enemy
   - Soda
+  - Music
+  - Ambiance
+  - SoundEffect
   layers:
   - Default
   - TransparentFX
